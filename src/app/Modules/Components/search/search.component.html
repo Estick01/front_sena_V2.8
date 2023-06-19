@@ -1,0 +1,13 @@
+<div class="barraBusqueda">
+  <div class="container-4">
+    <label for="search">
+      <input #inputBusqueda type="search"  [(ngModel)]="searchTerm" id="search" (keyup)="buscar('area')" name="search">
+      <button type="submit" class="icon" (click)="buscar('area')">
+        <span class="material-symbols-outlined">
+          search
+        </span>
+      </button>
+    </label>
+  </div>
+</div>
+
