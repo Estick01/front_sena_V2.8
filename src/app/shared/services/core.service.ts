@@ -20,7 +20,7 @@ export class CoreService {
   public empresa: Subject<EmpresaModel> = new Subject<EmpresaModel>;
   public permissions: Subject<string> = new Subject<string>;
   public check: Subject<boolean> = new Subject<boolean>;
-  public Data=new Subject;
+  public Data = new Subject;
   Data$ = this.Data.asObservable();
   check$ = this.check.asObservable();
 
@@ -31,16 +31,17 @@ export class CoreService {
     private http: HttpClient
   ) { }
 
-  public pass<T>(url:string, tabla:string, dato:string): Observable<T> {
-    if(dato == ''){
-      return this.http.get<T>(`${API_URL}${tabla}s`);
+  public pass<T>( tabla: string, dato: string): Observable<T> {
+    if (dato == '') {
+      return this.http.get<T>(`${API_URL}${tabla}`);
     }
-    else{
-      return this.http.get<T>(`${API_URL}${url}/${tabla}/${dato}`);
+    else {
+      return this.http.get<T>(`${API_URL}search/${tabla}/${dato}`);
     }
-    
   }
-  public get<T>(url: String, data:string | Object = ''): Observable<T> {
+
+
+  public get<T>(url: String, data: string | Object = ''): Observable<T> {
     return this.httpClient.get<T>(
       API_URL + url + this.getData(data),
       this.getConfig()
@@ -48,17 +49,14 @@ export class CoreService {
   }
 
   private getConfig() {
-
     const header = {
       'Accept': 'application/json'
     };
     const token = this._tokenService.getToken();
-
-
-
     return { withCredentials: true, headers: new HttpHeaders(header) };
   }
 
+  
   public post<T>(url: String, data: Object | FormData = {}): Observable<T> {
     return this.httpClient.post<T>(
       API_URL + url,

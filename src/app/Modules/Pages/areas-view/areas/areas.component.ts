@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewChecked, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewChecked, AfterViewInit,OnDestroy, inject } from '@angular/core';
 import { AreaModel } from 'src/app/shared/models/area.model';
 import { AreaService } from 'src/app/shared/services/area.service';
 import { NotificationService } from 'src/app/shared/services/notification-service';
@@ -18,7 +18,7 @@ import { strings } from '@material/dialog';
   templateUrl: './areas.component.html',
   styleUrls: ['./areas.component.css']
 })
-export class AreasComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class AreasComponent implements OnInit, OnDestroy {
 
 
   @ViewChild('slickElement') slickElement!: ElementRef;
@@ -30,7 +30,7 @@ export class AreasComponent implements OnInit, AfterViewChecked, OnDestroy {
   displayet: AreaModel[] = []
   searchTerm: string = '';
   area: AreaModel | null = null;
-  View: AreaModel[] = []
+  view: AreaModel[] = []
   areas: AreaModel[] = [];
   private subscription: Subscription | undefined;
   filler: ExtendModalFiller[] = [];
@@ -42,35 +42,27 @@ export class AreasComponent implements OnInit, AfterViewChecked, OnDestroy {
     private modal: MatDialog,
     private notificationService: NotificationService,
     private _areaService: AreaService,
-
-
   ) { }
+
   ngOnInit() {
-    this.iniciarCache();
-    this.getAreas();
+
+    this.searchService.$searchArrayService.subscribe((res: any) => {
+      this.view = res;
+    });
+    
   }
 
   iniciarCache() {
     this.cache.set(0, { areas: null });
   }
+
+
   getAreas() {
-    const cacheAreas = this.cache.get(0)!.areas;
-    if (cacheAreas !== null) {
-      if (this.areas !== cacheAreas) {
-        this.areas = cacheAreas;
-      }
-    } else {
-      this._areaService.traerAreas().subscribe(
-        area => {
-          this.areas = area;
-          this.View = this.areas;
-        },
-        error => {
-          this.notificationService.showNotification({ message: "Error de conexión" });
-        }
-      );
-    }
+
+
   }
+
+
   deleteArea(event: number) {
     this._areaService.borrarArea(event).subscribe(() => {
       this.getAreas();
@@ -94,6 +86,7 @@ export class AreasComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     });
   }
+  
   /////////////////////////////////////////////
 
 
@@ -118,18 +111,10 @@ export class AreasComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.showResultadoBusqueda = false;
     this.resultadoBusqueda = null;
   }
-  ngAfterViewChecked(): void {
-    this.search();
-  }
-  search() {
-    this.searchService.$searchArrayService.subscribe((res: any) => {
-      this.displayet = res;
-      this.Data();
-    });
-  }
-  Data(){
-      this.View = this.displayet;
-  }
+
+
+
+
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

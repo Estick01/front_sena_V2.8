@@ -2,8 +2,8 @@
   <div class="content-slick-information">
     <app-search></app-search>
     <div class="slick-wrapper">
-      <div class="slider" >
-        <div class="slide-item" *ngFor="let area of View">
+      <div class="slider">
+        <div class="slide-item" *ngFor="let area of view">
           <div class="area">
             <picture>
               <img width="64" height="64" src={{area.iconUrl}} alt="artificial-intelligence" />
@@ -19,7 +19,7 @@
           <div class="actions">
             <button (click)="openModalUpdate(area)"><img src="../../../assets/icons/reload.svg"></button>
             <button (click)="deleteArea(area.id!)"><img src="../../../assets/icons/delete.svg"></button>
-        </div>
+          </div>
         </div>
       </div>
     </div>
@@ -34,11 +34,13 @@
         </span>
       </div>
       <div class="panel-body">
-          <div class="tex-carc">
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae accusamus voluptatem porro placeat ut perferendis praesentium quae ab nostrum animi culpa dolores magnam, esse dignissimos ratione doloribus a ad temporibus!</p>
-          </div>
+        <div class="tex-carc">
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae accusamus voluptatem porro placeat ut
+            perferendis praesentium quae ab nostrum animi culpa dolores magnam, esse dignissimos ratione doloribus a ad
+            temporibus!</p>
+        </div>
       </div>
-  </div>
+    </div>
   </div>
 
 </div>
