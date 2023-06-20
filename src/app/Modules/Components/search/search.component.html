@@ -1,9 +1,9 @@
 <div class="barraBusqueda">
   <div class="container-4">
     <label for="search">
-      <input #inputBusqueda type="search" (input)="buscar()" [(ngModel)]="searchTerm" id="search"
+      <input #inputBusqueda type="search" (keyup)="engine()" [(ngModel)]="searchTerm" id="search"
         name="search">
-      <button type="submit" class="icon" (click)="buscar()">
+      <button type="submit" class="icon" (click)="engine()">
         <span class="material-symbols-outlined">
           search
         </span>

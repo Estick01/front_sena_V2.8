@@ -17,11 +17,10 @@ export class SearchComponent {
 
 
   ngOnInit() {
-
-    this.buscar()
+    this.engine()
   }
 
-  buscar(): void {
+  engine(): void {
 
     if (!this.searchTerm || this.searchTerm == "") {
 
@@ -34,6 +33,8 @@ export class SearchComponent {
           let resultados = response.resultados;
           let keys = Object.keys(resultados);
           let dato = keys.flatMap(key => resultados[Number(key)]);
+          console.log(response);
+          
           this.searchBar.searchArrayUpdate(dato);
         });
 

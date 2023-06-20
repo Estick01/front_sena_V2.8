@@ -1,17 +1,17 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewChecked, AfterViewInit,OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef,AfterViewChecked, AfterViewInit,OnDestroy, inject } from '@angular/core';
 import { AreaModel } from 'src/app/shared/models/area.model';
 import { AreaService } from 'src/app/shared/services/area.service';
 import { NotificationService } from 'src/app/shared/services/notification-service';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import 'slick-carousel';
 import * as $ from 'jquery';
+import 'slick-carousel';
 import { ExtendModalComponent } from '../../../Components/extend-modal/extend-modal.component';
 import { MatDialogConfig } from '@angular/material/dialog';
 import { AreasModalComponent } from '../areas-modal/areas-modal.component';
 import { ExtendModalFiller } from 'src/app/shared/models/extend-modal-content';
 import { SearchBarService } from 'src/app/shared/services/search-bar.service';
-import { strings } from '@material/dialog';
+
 
 @Component({
   selector: 'app-areas',
@@ -36,6 +36,7 @@ export class AreasComponent implements OnInit, OnDestroy {
   filler: ExtendModalFiller[] = [];
 
   constructor(
+    private cdRef: ChangeDetectorRef,
     //private dialogRef: MatDialogRef<AreasComponent>,
     //private modalRef: MatDialogRef<ExtendModalComponent>,
     private searchService: SearchBarService,
@@ -47,16 +48,24 @@ export class AreasComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.searchService.$searchArrayService.subscribe((res: any) => {
+      
+
       this.view = res;
+
+      
     });
-    
+
   }
 
   iniciarCache() {
     this.cache.set(0, { areas: null });
   }
 
-
+ destroySlider(){
+  console.log("destroy")
+  $(this.slickElement.nativeElement).slick('unslick')
+ }
+ 
   getAreas() {
 
 
@@ -86,7 +95,7 @@ export class AreasComponent implements OnInit, OnDestroy {
 
     });
   }
-  
+
   /////////////////////////////////////////////
 
 
@@ -121,4 +130,90 @@ export class AreasComponent implements OnInit, OnDestroy {
     }
   }
   
+
+  setSlider(){
+   
+      $(this.slickElement.nativeElement).slick({
+        rows: 1,
+        dots: false,
+        arrows: true,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 1250,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              rows: 1
+            }
+          },
+          {
+            breakpoint: 1100,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              rows: 2
+            }
+          },
+          {
+            breakpoint: 730,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              rows: 1
+            }
+          }
+        ]
+      });
+
+      
+    
+  }
+
+  setSlider1(){
+   
+      $(this.slickElement.nativeElement).slick({
+        rows: 1,
+        dots: false,
+        arrows: true,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 1250,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              rows: 1
+            }
+          },
+          {
+            breakpoint: 1100,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              rows: 2
+            }
+          },
+          {
+            breakpoint: 730,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              rows: 1
+            }
+          }
+        ]
+      });
+
+      
+    
+  }
+
+  ngAfterViewChecked(): void {
+
+  }
 }

@@ -1,8 +1,8 @@
-<div class="bloque-slick-information">
-  <div class="content-slick-information">
+<button (click)="setSlider1()">a</button>
+<button (click)="destroySlider()">b</button>
     <app-search></app-search>
     <div class="slick-wrapper">
-      <div class="slider">
+      <div class="slider" #slickElement>
         <div class="slide-item" *ngFor="let area of view">
           <div class="area">
             <picture>
@@ -23,24 +23,5 @@
         </div>
       </div>
     </div>
-    <div class="button">
-      <a><button class="añadir" (click)="openModalCreate()">Añadir</button></a>
-    </div>
-    <div class="descripcion">
-      <div class="desc-title">
-        <h2>Descripcion</h2>
-        <span class="material-symbols-outlined">
-          expand_more
-        </span>
-      </div>
-      <div class="panel-body">
-        <div class="tex-carc">
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae accusamus voluptatem porro placeat ut
-            perferendis praesentium quae ab nostrum animi culpa dolores magnam, esse dignissimos ratione doloribus a ad
-            temporibus!</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
-</div>
+   
