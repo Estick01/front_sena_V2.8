@@ -277,3 +277,34 @@ input[type="password"]:-webkit-autofill {
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(245, 245, 245);
 }
+::ng-deep .mat-mdc-paginator-container{
+    justify-content: center !important;
+  }
+  ::ng-deep .mat-mdc-paginator-range-actions{
+    position: relative;
+    gap: 20px;
+    justify-content: center;
+  }
+  ::ng-deep .mat-mdc-paginator{
+    background-color:transparent;
+    color: #fff; 
+  }
+  ::ng-deep .mat-mdc-paginator svg{
+    fill: #fff;
+  }
+  ::ng-deep .mat-mdc-paginator button{
+    background-color: #192239d4;
+    border-radius: 22px;
+  }
+  ::ng-deep .mat-mdc-paginator button:hover{
+    border: solid #203363 1px;
+  }
+  ::ng-deep .mat-mdc-paginator-range-label{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    bottom:-30px;
+    left: 0;
+    right: 0;
+  }
+  

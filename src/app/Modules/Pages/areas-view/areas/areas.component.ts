@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef, AfterViewChecked, AfterViewInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef, OnDestroy,HostListener } from '@angular/core';
 import { AreaModel } from 'src/app/shared/models/area.model';
 import { AreaService } from 'src/app/shared/services/area.service';
 import { NotificationService } from 'src/app/shared/services/notification-service';
@@ -36,9 +36,9 @@ export class AreasComponent implements OnInit, OnDestroy {
   private subscription: Subscription | undefined;
   filler: ExtendModalFiller[] = [];
 
-  page_size:number = 6;
-  page_number:number = 1;
-  page_size_options= [2, 4 ,8 , 12, 16, 32]
+  page_size: number = 8;
+  page_number: number = 1;
+  page_size_options = [2, 4, 8, 12, 16, 32]
 
   constructor(
     private cdRef: ChangeDetectorRef,
@@ -49,16 +49,42 @@ export class AreasComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private _areaService: AreaService,
   ) { }
+  @HostListener('window:resize')
+  onWindowResize() {
+    this.cambiarVariable(); 
+  }
+  cambiarVariable() {
+    const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-  handlePage(e:PageEvent){
+    if (screenWidth > 1592 ) {
+      this.page_size = 8;
+    }
+    else if (screenWidth < 1592 && screenWidth >= 1203 ){
+      this.page_size = 6;
+    }
+    else if (screenWidth < 1203 && screenWidth >= 814) {
+      this.page_size = 4;
+    }
+    else if (screenWidth < 814 && screenWidth >= 814 ) {
+      this.page_size = 2;
+    }
+    else if (screenWidth < 814 && screenWidth >= 600 ) {
+      this.page_size = 2;
+    }
+    else if (screenWidth < 600) {
+      this.page_size = 1;
+    }
+
+  }
+  handlePage(e: PageEvent) {
     this.page_size = e.pageSize
-    this.page_number = e.pageIndex+1
+    this.page_number = e.pageIndex + 1
   }
 
   ngOnInit() {
+    this.cambiarVariable();
     this.searchService.$searchArrayService.subscribe((res: any) => {
       this.view = res;
-      
     });
   }
   iniciarCache() {

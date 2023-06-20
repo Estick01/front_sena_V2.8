@@ -106,24 +106,25 @@
 }
 .slider{
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px calc(100%/4);
+  max-width: 80%;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 30px;
   grid-auto-rows: minmax(100px, auto);
   justify-content: center
 }
-.options{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 50px;
-  padding: 0px 2px;
+@media (max-width: 812px) {
+  .slider{
+    display: flex;
+  }
+}
+::ng-deep .mat-mdc-paginator-container{
+  justify-content: center !important;
 }
 ::ng-deep .mat-mdc-paginator-range-actions{
   position: relative;
   gap: 20px;
+  justify-content: center;
 }
-
 ::ng-deep .mat-mdc-paginator{
   background-color:transparent;
   color: #fff; 
