@@ -15,6 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { ExtendModalComponent } from '../Components/extend-modal/extend-modal.component';
 import { SearchComponent } from '../Components/search/search.component';
+import { ComponentsPipe } from '../components.pipe';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -24,6 +26,7 @@ import { SearchComponent } from '../Components/search/search.component';
     ProyectoFormativoModalComponent,
     AreasComponent,
     AreasModalComponent,
+    ComponentsPipe
  
 
 
@@ -36,6 +39,7 @@ import { SearchComponent } from '../Components/search/search.component';
     MatButtonModule, 
     MatDividerModule, 
     MatIconModule,
+    MatPaginatorModule
     
   ]
   , exports: [

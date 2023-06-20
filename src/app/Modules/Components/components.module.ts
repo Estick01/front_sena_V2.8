@@ -17,13 +17,15 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SearchComponent } from './search/search.component';
 
 
+
 @NgModule({
   declarations: [
     ChargeWheelComponent,
     DescripcionComponent,
     ProgramaFormativoComponent,
     ExtendModalComponent,
-    SearchComponent
+    SearchComponent,
+
     
   ],
   imports: [

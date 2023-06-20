@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef,AfterViewChecked, AfterViewInit,OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef, AfterViewChecked, AfterViewInit, OnDestroy, inject } from '@angular/core';
 import { AreaModel } from 'src/app/shared/models/area.model';
 import { AreaService } from 'src/app/shared/services/area.service';
 import { NotificationService } from 'src/app/shared/services/notification-service';
@@ -11,6 +11,7 @@ import { MatDialogConfig } from '@angular/material/dialog';
 import { AreasModalComponent } from '../areas-modal/areas-modal.component';
 import { ExtendModalFiller } from 'src/app/shared/models/extend-modal-content';
 import { SearchBarService } from 'src/app/shared/services/search-bar.service';
+import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -35,6 +36,10 @@ export class AreasComponent implements OnInit, OnDestroy {
   private subscription: Subscription | undefined;
   filler: ExtendModalFiller[] = [];
 
+  page_size:number = 6;
+  page_number:number = 1;
+  page_size_options= [2, 4 ,8 , 12, 16, 32]
+
   constructor(
     private cdRef: ChangeDetectorRef,
     //private dialogRef: MatDialogRef<AreasComponent>,
@@ -45,33 +50,30 @@ export class AreasComponent implements OnInit, OnDestroy {
     private _areaService: AreaService,
   ) { }
 
-  ngOnInit() {
-
-    this.searchService.$searchArrayService.subscribe((res: any) => {
-      
-
-      this.view = res;
-
-      
-    });
-
+  handlePage(e:PageEvent){
+    this.page_size = e.pageSize
+    this.page_number = e.pageIndex+1
   }
 
+  ngOnInit() {
+    this.searchService.$searchArrayService.subscribe((res: any) => {
+      this.view = res;
+      
+    });
+  }
   iniciarCache() {
     this.cache.set(0, { areas: null });
   }
 
- destroySlider(){
-  console.log("destroy")
-  $(this.slickElement.nativeElement).slick('unslick')
- }
- 
+  destroySlider() {
+    console.log("destroy")
+    $(this.slickElement.nativeElement.querySelector('.slider')).slick('unslick')
+  }
+
   getAreas() {
 
 
   }
-
-
   deleteArea(event: number) {
     this._areaService.borrarArea(event).subscribe(() => {
       this.getAreas();
@@ -128,92 +130,5 @@ export class AreasComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-  }
-  
-
-  setSlider(){
-   
-      $(this.slickElement.nativeElement).slick({
-        rows: 1,
-        dots: false,
-        arrows: true,
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        responsive: [
-          {
-            breakpoint: 1250,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 2,
-              rows: 1
-            }
-          },
-          {
-            breakpoint: 1100,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              rows: 2
-            }
-          },
-          {
-            breakpoint: 730,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              rows: 1
-            }
-          }
-        ]
-      });
-
-      
-    
-  }
-
-  setSlider1(){
-   
-      $(this.slickElement.nativeElement).slick({
-        rows: 1,
-        dots: false,
-        arrows: true,
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        responsive: [
-          {
-            breakpoint: 1250,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              rows: 1
-            }
-          },
-          {
-            breakpoint: 1100,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              rows: 2
-            }
-          },
-          {
-            breakpoint: 730,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              rows: 1
-            }
-          }
-        ]
-      });
-
-      
-    
-  }
-
-  ngAfterViewChecked(): void {
-
   }
 }

@@ -82,10 +82,6 @@ export class AreasModalComponent {
       });
     }
   }
-
-
-
-
   private getControl(control: string) {
     return this.formArea.controls[control];
   }
@@ -98,4 +94,5 @@ export class AreasModalComponent {
       codigo: this.getControl('codigo').value
     }
   }
+
 }
